@@ -1,66 +1,67 @@
 
 import 'reflect-metadata';
-import express, { Request, Response } from 'express';
-import { createConnection } from 'typeorm';
+import * as express from 'express';
+import { AppDataSource } from './data-source';
 import { User } from './entity/User';
 
 const app = express();
 
 app.use(express.json());
 
-app.get('/users', async (req: Request, res: Response) => {
+app.get('/users', async (req, res) => {
   try {
-    const userRepository = createConnection().getRepository(User);
+    const userRepository = AppDataSource.getRepository(User);
+    // console.log('User repository',userRepository)
     const users = await userRepository.find();
-    res.json(users);
+    return res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching users', error: error.message });
+    return res.status(500).json({ message: 'Error fetching users', error: error.message });
   }
 });
 
-app.post('/users', async (req: Request, res: Response) => {
+app.post('/users', async (req, res) => {
   try {
-    const userRepository = createConnection().getRepository(User);
+    const userRepository = AppDataSource.getRepository(User);
     const newUser = userRepository.create(req.body);
     await userRepository.save(newUser);
-    res.status(201).json(newUser);
+    return res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating user', error: error.message });
+    return res.status(500).json({ message: 'Error creating user', error: error.message });
   }
 });
 
-app.put('/users/:id', async (req: Request, res: Response) => {
+app.put('/users/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const userRepository = createConnection().getRepository(User);
-    const user = await userRepository.findOne(id);
+    const uid = req.params;
+    const userRepository = AppDataSource.getRepository(User);
+    console.log('userRepository::', userRepository)
+    const user = await userRepository.findOne({where:{id:uid}});
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    userRepository.merge(user, req.body);
-    const updatedUser = await userRepository.save(user);
-    res.json(updatedUser);
+    await userRepository.save(user);
+    return res.status(200).json(user)
   } catch (error) {
-    res.status(500).json({ message: 'Error updating user', error: error.message });
+    return res.status(500).json({ message: 'Error updating user', error: error.message });
   }
 });
 
-app.delete('/users/:id', async (req: Request, res: Response) => {
+app.delete('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const userRepository = createConnection().getRepository(User);
-    const user = await userRepository.findOne(id);
+    const userRepository = AppDataSource.getRepository(User);
+    const user = await userRepository.findOne({where:{id:id}});
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
     await userRepository.delete(id);
-    res.json({ message: 'User deleted successfully' });
+    return res.status(304).json({ message: 'User deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting user', error: error.message });
+    return res.status(500).json({ message: 'Error deleting user', error: error.message });
   }
 });
 
-const PORT = 4000;
+const PORT = 9000;
 app.listen(PORT, () => {
-  console.log('Server is running on port 4000');
+  console.log('Server is running on port 9000');
 });
