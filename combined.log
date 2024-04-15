@@ -1,0 +1,58 @@
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"error","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"code":"ER_NOT_SUPPORTED_AUTH_MODE","errno":1251,"fatal":true,"level":"error","message":"Error during Data Source initialization ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client","service":"userService","sqlMessage":"Client does not support authentication protocol requested by server; consider upgrading MySQL client","sqlState":"08004","stack":"Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client\n    at Handshake.Sequence._packetToError (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\sequences\\Sequence.js:47:14)\n    at Handshake.ErrorPacket (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\sequences\\Handshake.js:123:18)\n    at Protocol._parsePacket (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:291:23)\n    at Parser._parsePacket (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Parser.js:433:10)\n    at Parser.write (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Parser.js:43:10)\n    at Protocol.write (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:38:16)\n    at Socket.<anonymous> (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Connection.js:88:28)\n    at Socket.<anonymous> (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Connection.js:526:10)\n    at Socket.emit (node:events:514:28)\n    at Socket.emit (node:domain:488:12)\n    --------------------\n    at Protocol._enqueue (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:144:48)\n    at Protocol.handshake (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:51:23)\n    at PoolConnection.connect (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Connection.js:116:18)\n    at Pool.getConnection (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Pool.js:48:16)\n    at E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\typeorm\\src\\driver\\mysql\\MysqlDriver.ts:1268:18\n    at new Promise (<anonymous>)\n    at MysqlDriver.createPool (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\typeorm\\src\\driver\\mysql\\MysqlDriver.ts:1265:16)\n    at MysqlDriver.connect (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\typeorm\\src\\driver\\mysql\\MysqlDriver.ts:400:36)\n    at DataSource.initialize (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\src\\data-source\\DataSource.ts:253:27)\n    at Object.<anonymous> (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\src\\data-source.ts:33:15)"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"error","message":"Error during Data Source initialization","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"code":"ER_NOT_SUPPORTED_AUTH_MODE","errno":1251,"fatal":true,"level":"error","message":"Error during Data Source initialization ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client","service":"userService","sqlMessage":"Client does not support authentication protocol requested by server; consider upgrading MySQL client","sqlState":"08004","stack":"Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client\n    at Handshake.Sequence._packetToError (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\sequences\\Sequence.js:47:14)\n    at Handshake.ErrorPacket (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\sequences\\Handshake.js:123:18)\n    at Protocol._parsePacket (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:291:23)\n    at Parser._parsePacket (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Parser.js:433:10)\n    at Parser.write (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Parser.js:43:10)\n    at Protocol.write (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:38:16)\n    at Socket.<anonymous> (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Connection.js:88:28)\n    at Socket.<anonymous> (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Connection.js:526:10)\n    at Socket.emit (node:events:514:28)\n    at Socket.emit (node:domain:488:12)\n    --------------------\n    at Protocol._enqueue (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:144:48)\n    at Protocol.handshake (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\protocol\\Protocol.js:51:23)\n    at PoolConnection.connect (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Connection.js:116:18)\n    at Pool.getConnection (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\mysql\\lib\\Pool.js:48:16)\n    at E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\typeorm\\src\\driver\\mysql\\MysqlDriver.ts:1268:18\n    at new Promise (<anonymous>)\n    at MysqlDriver.createPool (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\typeorm\\src\\driver\\mysql\\MysqlDriver.ts:1265:16)\n    at MysqlDriver.connect (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\typeorm\\src\\driver\\mysql\\MysqlDriver.ts:400:36)\n    at DataSource.initialize (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\node_modules\\src\\data-source\\DataSource.ts:253:27)\n    at Object.<anonymous> (E:\\PURUSHOTTAM\\Videos\\Practice\\typeorm-project\\src\\data-source.ts:33:15)"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Users list ","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"0":{"email":"anand@gmail.com","id":26,"name":"anand","password":"123","role":"reader"},"1":{"email":"vinay@gmail.com","id":28,"name":"vinay","password":"123","role":"admin"},"2":{"email":"ajay@gmail.com","id":29,"name":"ajay","password":"$2b$10$.nwwsJCbJPjVRT1nihA7XOLcihw.vTZweKiuOTAB8.jV1O.PxwT1m","role":"admin"},"3":{"email":"vijay@gmail.com","id":30,"name":"vijay","password":"$2b$10$yr5Uz.tAETeMIi9vEmahz.MuIWf8QrVDX.A/pPNwoBBJvZb2Tne8q","role":"admin"},"level":"info","message":"Users list ","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"0":{"email":"anand@gmail.com","id":26,"name":"anand","password":"123","role":"reader"},"1":{"email":"vinay@gmail.com","id":28,"name":"vinay","password":"123","role":"admin"},"2":{"email":"ajay@gmail.com","id":29,"name":"ajay","password":"$2b$10$.nwwsJCbJPjVRT1nihA7XOLcihw.vTZweKiuOTAB8.jV1O.PxwT1m","role":"admin"},"3":{"email":"vijay@gmail.com","id":30,"name":"vijay","password":"$2b$10$yr5Uz.tAETeMIi9vEmahz.MuIWf8QrVDX.A/pPNwoBBJvZb2Tne8q","role":"admin"},"level":"info","message":"Registered users ","service":"userService"}
+{"level":"info","message":"New user create successfully","service":"userService"}
+{"level":"info","message":"User updated successfully","service":"userService"}
+{"level":"info","message":"User updated successfully","service":"userService"}
+{"level":"info","message":"User updated successfully","service":"userService"}
+{"level":"info","message":"Server is running on port 9000","service":"userService"}
+{"level":"info","message":"Data Source has been initialized!","service":"userService"}
+{"level":"info","message":"User updated successfully","service":"userService"}

@@ -1,14 +1,17 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { User } from "./entity/User"
+import * as dotenv from 'dotenv'
+import logger from "../util/loggers"
+dotenv.config();
 
 export const AppDataSource = new DataSource({
     type: "mysql",
     host: "localhost",
     port: 3306,
-    username: "root",
-    password: "ASDF12345@a",
-    database: "ts-database",
+    username: process.env.USER_NAME,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
     synchronize: true,
     logging: false,
     entities: [User],
@@ -18,8 +21,8 @@ export const AppDataSource = new DataSource({
 
 AppDataSource.initialize()
     .then(() => {
-        console.log("Data Source has been initialized!")
+        logger.info("Data Source has been initialized!")
     })
     .catch((err) => {
-        console.error("Error during Data Source initialization", err)
+        logger.error("Error during Data Source initialization", err)
     })

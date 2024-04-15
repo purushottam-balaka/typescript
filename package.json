@@ -11,11 +11,15 @@
    "dependencies": {
       "bcrypt": "^5.1.1",
       "body-parser": "^1.20.2",
+      "bunyan": "^1.8.15",
+      "dotenv": "^16.4.5",
       "express": "^4.19.2",
       "jsonwebtoken": "^9.0.2",
+      "morgan": "^1.10.0",
       "mysql": "^2.14.1",
       "reflect-metadata": "^0.1.13",
-      "typeorm": "0.3.20"
+      "typeorm": "0.3.20",
+      "winston": "^3.13.0"
    },
    "scripts": {
       "start": "nodemon src/app.ts",
