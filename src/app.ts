@@ -19,10 +19,10 @@ dotenv.config();
 const generateToken = (payload: any): string => {
   try {
     const token = jwt.sign(payload, process.env.SECRET_KEY);
-    console.log('token', token)
+    logger.info('Token generated successfully')
     return token;
   } catch (error) {
-    console.error('Error generating token:', error);
+    logger.error('Error when generaring the token')
     throw error;
   }
 };
@@ -32,7 +32,7 @@ const verifyToken = (req, res,next): any => {
   const token=req.headers['authorization'] 
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: 'Failed to authenticate token' });
+      return res.status(403).json({ message: 'Token authentication is failed' });
     }
     req.user = decoded;
     next();
@@ -55,7 +55,7 @@ const hashPassword = async (plainPassword: string): Promise<string> => {
   }
 };
 
-app.get('/users',verifyToken, async (req, res) => {
+app.get('/users', async (req, res) => {
   try {
     const userRepository = AppDataSource.getRepository(User);
     const user=await userRepository.findOne({where:{id:req.user}})
@@ -111,7 +111,6 @@ app.put('/users/:id',verifyToken, async (req, res) => {
     // console.log('uid:', uid)
     const user = await userRepository.findOne({where:{id:req.user}});
     const toBeUpd=await userRepository.findOne({where:{id:uid}})
-    
     if( user.role == 'admin' || user.role == 'writer'){
       if (!toBeUpd) {
         logger.warn('User not found')
@@ -140,6 +139,7 @@ app.delete('/users/:id',verifyToken, async (req, res) => {
     
     if(user.role== 'admin' || user.role=== 'writer'){
       if (!toBeDel) {
+        logger.warn( 'User not found')
         return res.status(404).json({ message: 'User not found' });
       }
       await userRepository.remove(toBeDel);
@@ -207,3 +207,5 @@ app.post('/login', async(req, res)=>{
 app.listen(process.env.PORT, () => {
   logger.info(`Server is running on port ${process.env.PORT}`);
 });
+
+export default app
