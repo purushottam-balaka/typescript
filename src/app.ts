@@ -1,35 +1,36 @@
 
 import 'reflect-metadata';
-import * as express from 'express';
+import express, {Request, Response, NextFunction } from 'express';
 import { AppDataSource } from './data-source';
 import { User } from './entity/User';
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-import * as bodyParser from 'body-parser';
-import * as dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 import logger from '../util/loggers';
-import { log } from 'console';
 
 const app = express();
 
 app.use(bodyParser.json());
 
 dotenv.config();
-
-const generateToken = (payload: any): string => {
+// console.log(process.env.SECRET_KEY)
+const generateToken = (payload: any): any => {
   try {
     const token = jwt.sign(payload, process.env.SECRET_KEY);
+    if(token){
     logger.info('Token generated successfully')
     return token;
+    }
   } catch (error) {
     logger.error('Error when generaring the token')
     throw error;
   }
 };
 
-const verifyToken = (req, res,next): any => {
+const verifyToken = (req:any, res:Response,next:NextFunction): any => {
   try {
-  const token=req.headers['authorization'] 
+  const token:any =req.headers['authorization'] 
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(403).json({ message: 'Token authentication is failed' });
@@ -39,8 +40,8 @@ const verifyToken = (req, res,next): any => {
   });
 
   } catch (error) {
-    console.error('Error verifying token:', error);
-    throw error;
+    logger.error('Error verifying token:', error)
+    return res.status(500).json({message: 'Internal error'})
   }
 };
 
@@ -50,15 +51,16 @@ const hashPassword = async (plainPassword: string): Promise<string> => {
     const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
     return hashedPassword;
   } catch (error) {
+    logger.error('Error verifying token:', error)
     console.error('Error hashing password:', error);
     throw error;
   }
 };
 
-app.get('/users', async (req, res) => {
+app.get('/users', async (req:any, res:Response) => {
   try {
     const userRepository = AppDataSource.getRepository(User);
-    const user=await userRepository.findOne({where:{id:req.user}})
+    const user=await userRepository.findOneBy({id:req.user})
     // console.log('User repository',userRepository)
     if (user.role=='admin' || user.role=='reader'){
     const users = await userRepository.find();
@@ -76,7 +78,7 @@ app.get('/users', async (req, res) => {
   }
 });
 
-app.post('/signup', async (req, res) => {
+app.post('/signup', async (req:Request, res:Response) => {
   try {
     const userRepository = AppDataSource.getRepository(User);
     const name=req.body.name;
@@ -104,13 +106,13 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-app.put('/users/:id',verifyToken, async (req, res) => {
+app.put('/users/:id',verifyToken, async (req:any, res: Response) => {
   try {
     const uid = req.params.id;
     const userRepository = AppDataSource.getRepository(User);
     // console.log('uid:', uid)
     const user = await userRepository.findOne({where:{id:req.user}});
-    const toBeUpd=await userRepository.findOne({where:{id:uid}})
+    const toBeUpd=await userRepository.findOne({where:{id:+uid}})
     if( user.role == 'admin' || user.role == 'writer'){
       if (!toBeUpd) {
         logger.warn('User not found')
@@ -130,14 +132,14 @@ app.put('/users/:id',verifyToken, async (req, res) => {
   }
 });
 
-app.delete('/users/:id',verifyToken, async (req, res) => {
+app.delete('/users/:id',verifyToken, async (req:any, res:any) => {
   try {
     const id  = req.params.id;
     const userRepository = AppDataSource.getRepository(User);
     const user = await userRepository.findOne({where:{id:req.user}});
-    const toBeDel=await userRepository.findOne({where:{id:id}})
+    const toBeDel=await userRepository.findOne({where:{id:+id}})
     
-    if(user.role== 'admin' || user.role=== 'writer'){
+    if(user.role==='admin' || user.role=== 'writer'){
       if (!toBeDel) {
         logger.warn( 'User not found')
         return res.status(404).json({ message: 'User not found' });
@@ -177,7 +179,7 @@ app.delete('/users/:id',verifyToken, async (req, res) => {
 //   }
 // })
 
-app.post('/login', async(req, res)=>{
+app.post('/login', async(req:Request, res:Response)=>{
   try{
   const email=req.body.email;
   const password=req.body.password;
@@ -203,6 +205,7 @@ app.post('/login', async(req, res)=>{
 }
 
 })
+
 
 app.listen(process.env.PORT, () => {
   logger.info(`Server is running on port ${process.env.PORT}`);
