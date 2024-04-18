@@ -3,77 +3,34 @@ import 'reflect-metadata';
 import express, {Request, Response, NextFunction } from 'express';
 import { AppDataSource } from './data-source';
 import { User } from './entity/User';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import logger from '../util/loggers';
+import {verifyToken,generateToken,hashPassword} from '../util/token'
+import bcrypt from 'bcrypt'
 
 const app = express();
-
 app.use(bodyParser.json());
 
 dotenv.config();
 // console.log(process.env.SECRET_KEY)
-const generateToken = (payload: any): any => {
-  try {
-    const token = jwt.sign(payload, process.env.SECRET_KEY);
-    if(token){
-    logger.info('Token generated successfully')
-    return token;
-    }
-  } catch (error) {
-    logger.error('Error when generaring the token')
-    throw error;
-  }
-};
 
-const verifyToken = (req:any, res:Response,next:NextFunction): any => {
-  try {
-  const token:any =req.headers['authorization'] 
-  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ message: 'Token authentication is failed' });
-    }
-    req.user = decoded;
-    next();
-  });
-
-  } catch (error) {
-    logger.error('Error verifying token:', error)
-    return res.status(500).json({message: 'Internal error'})
-  }
-};
-
-const hashPassword = async (plainPassword: string): Promise<string> => {
-  try {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
-    return hashedPassword;
-  } catch (error) {
-    logger.error('Error verifying token:', error)
-    console.error('Error hashing password:', error);
-    throw error;
-  }
-};
-
-app.get('/users', async (req:any, res:Response) => {
+app.get('/users',verifyToken, async (req:any, res:Response) => {
   try {
     const userRepository = AppDataSource.getRepository(User);
-    const user=await userRepository.findOneBy({id:req.user})
-    // console.log('User repository',userRepository)
+    const user=await userRepository.findOne({where:{id:req.user}})
+    // console.log('User repository',userRepository,user,req.user)
     if (user.role=='admin' || user.role=='reader'){
     const users = await userRepository.find();
     logger.info("Registered users ",users)
     return res.status(200).json(users);
-   
     }
     else{
       logger.info('Not an autheticated action')
       return res.status(401).json({message:'Not an authenticated action'})
     }
   } catch (error) {
-    logger.error('Error fetching users')
+    logger.error('Error fetching users',error)
     return res.status(500).json({ message: 'Error fetching users', error: error.message });
   }
 });
@@ -99,7 +56,7 @@ app.post('/signup', async (req:Request, res:Response) => {
     // }
       await userRepository.save(newUser);
       logger.info('New user create successfully');
-      return res.status(201).json('New user create successfully');
+      return res.status(201).json({message:'New user created successfully'});
   } catch (error) {
     logger.error('Error creating user', error)
     return res.status(500).json({ message: 'Error creating user', error: error.message });
@@ -121,7 +78,7 @@ app.put('/users/:id',verifyToken, async (req:any, res: Response) => {
       toBeUpd.email=req.body.email;
       await userRepository.save(toBeUpd);
       logger.info('User updated successfully')
-      return res.status(200).json(toBeUpd)
+      return res.status(200).json({message:'User updated successfully',toBeUpd})
     }else{
       logger.warn('Not an authenticated action')
       return res.status(401).json({message: 'Not an authenticated action'})
@@ -136,7 +93,7 @@ app.delete('/users/:id',verifyToken, async (req:any, res:any) => {
   try {
     const id  = req.params.id;
     const userRepository = AppDataSource.getRepository(User);
-    const user = await userRepository.findOne({where:{id:req.user}});
+    const user = await userRepository.findOne({where:{id:+req.user}});
     const toBeDel=await userRepository.findOne({where:{id:+id}})
     
     if(user.role==='admin' || user.role=== 'writer'){
