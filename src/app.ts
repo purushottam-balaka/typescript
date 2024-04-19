@@ -23,7 +23,7 @@ app.get('/users',verifyToken, async (req:any, res:Response) => {
     if (user.role=='admin' || user.role=='reader'){
     const users = await userRepository.find();
     logger.info("Registered users ",users)
-    return res.status(200).json(users);
+    return res.status(200).json({users:users});
     }
     else{
       logger.info('Not an autheticated action')
@@ -69,7 +69,7 @@ app.put('/users/:id',verifyToken, async (req:any, res: Response) => {
     const userRepository = AppDataSource.getRepository(User);
     // console.log('uid:', uid)
     const user = await userRepository.findOne({where:{id:req.user}});
-    const toBeUpd=await userRepository.findOne({where:{id:+uid}})
+    const toBeUpd=await userRepository.findOne({where:{id:uid}})
     if( user.role == 'admin' || user.role == 'writer'){
       if (!toBeUpd) {
         logger.warn('User not found')
@@ -80,13 +80,13 @@ app.put('/users/:id',verifyToken, async (req:any, res: Response) => {
       logger.info('User updated successfully')
       return res.status(200).json({message:'User updated successfully',toBeUpd})
     }else{
-      logger.warn('Not an authenticated action')
-      return res.status(401).json({message: 'Not an authenticated action'})
-    }
+        logger.warn('Not an authenticated action')
+        return res.status(401).json({message: 'Not an authenticated action'})
+      }
   } catch (error) {
-    logger.error('Error updating user', error)
-    return res.status(500).json({ message: 'Error updating user', error: error.message });
-  }
+      logger.error('Error updating user', error)
+      return res.status(500).json({ message: 'Error updating user', error: error.message });
+    }
 });
 
 app.delete('/users/:id',verifyToken, async (req:any, res:any) => {
